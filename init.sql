@@ -1,0 +1,10 @@
+CREATE TABLE hackernews (
+    id int8 NOT NULL,
+    "type" varchar NOT NULL,
+    "by" varchar NOT NULL,
+    url varchar NULL,
+    score int4 NOT NULL,
+    title varchar NOT NULL,
+    "time" timestamp(0) NULL,
+    CONSTRAINT hackernews_pk PRIMARY KEY (id)
+);
