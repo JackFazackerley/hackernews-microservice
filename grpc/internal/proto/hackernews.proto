@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option go_package = "github.com/jackfazackerley/hackernews-microservice/grpc/internal/proto";
+
+package hackernews;
+
+import "google/protobuf/empty.proto";
+
+service API {
+  rpc All (google.protobuf.Empty) returns (Response) {}
+  rpc Jobs (google.protobuf.Empty) returns (Response) {}
+  rpc Stories (google.protobuf.Empty) returns (Response) {}
+}
+
+message Response {
+  repeated Item items = 1;
+}
+
+message Item {
+  int32 id = 1;
+  string type = 2;
+  string by = 3;
+  int64 time = 4;
+  string url = 5;
+  int64 score = 6;
+  string title = 7;
+  bool deleted = 8;
+  bool dead = 9;
+}

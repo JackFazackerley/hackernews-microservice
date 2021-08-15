@@ -1,0 +1,49 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:13.1
+    environment:
+      - POSTGRES_DB=hackernews
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+    - 5432:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: consumer
+    environment:
+      - HACKERNEWS_POSTGRES_USERNAME=postgres
+      - HACKERNEWS_POSTGRES_PASSWORD=postgres
+      - HACKERNEWS_POSTGRES_DATABASE=hackernews
+      - HACKERNEWS_POSTGRES_ADDRESS=postgres:5432
+      - HACKERNEWS_STORE_TYPE=postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api
+    environment:
+      - HACKERNEWS_POSTGRES_USERNAME=postgres
+      - HACKERNEWS_POSTGRES_PASSWORD=postgres
+      - HACKERNEWS_POSTGRES_DATABASE=hackernews
+      - HACKERNEWS_POSTGRES_ADDRESS=postgres:5432
+      - HACKERNEWS_STORE_TYPE=postgres
+    links:
+      - postgres
+    ports:
+      - 8080:8080
+    depends_on:
+      postgres:
+        condition: service_healthy
