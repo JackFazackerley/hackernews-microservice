@@ -41,3 +41,7 @@ $(cd core && docker-compose down)
 ```shell
 $(cd grpc && docker-compose down)
 ```
+
+## Note
+You'll notice that there is a fair amount of code duplication in this project between core and grpc. This is 
+intentional, purely for showing the difference between them.
