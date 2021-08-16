@@ -16,9 +16,9 @@ service, the REST API communicates with a GRPC server, which in turn communicate
 ## API
 Each service has the same endpoints to retrieve data:
 
-* /All - returns all items regardless of type
-* /Jobs - returns only type `job`
-* /Stories - returns only type `story`
+* /all - returns all items regardless of type
+* /jobs - returns only type `job`
+* /stories - returns only type `story`
 
 ## How to run
 ### Core
